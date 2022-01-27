@@ -15,12 +15,13 @@ def dbt_generator():
 
 @dbt_generator.command(help='Gennerate base models based on a .yml source')
 @click.option('-s', '--source-yml', type=click.Path(), help='Source .yml file to be used')
+@click.option('-f', '--find', type=click.Path(), help='Source .yml file to be used')
 @click.option('-o', '--output-path', type=click.Path(), help='Path to write generated models')
 @click.option('-m', '--model', type=str, default='', help='Select one model to generate')
 @click.option('-c', '--custom_prefix', type=str, default='', help='Enter a Custom String Prefix for Model Filename')
 @click.option('--model-prefix', type=bool, default=False, help='Prefix model name with source_name + _')
 @click.option('--source-index', type=int, default=0, help='Index of the source to generate base models for')
-def generate(source_yml, output_path, source_index, model, custom_prefix, model_prefix):
+def generate(source_yml, output_path, find, source_index, model, custom_prefix, model_prefix):
     tables, source_name = get_base_tables_and_source(source_yml, source_index)
     if model:
         tables = [model]
@@ -28,7 +29,7 @@ def generate(source_yml, output_path, source_index, model, custom_prefix, model_
         file_name = custom_prefix + table + '.sql'
         if model_prefix:
             file_name = source_name + '_' + file_name
-        query = generate_base_model(table, source_name)
+        query = generate_base_model(table, source_name, find)
         file = open(os.path.join(output_path, file_name), 'w', newline='')
         file.write(query)
 
