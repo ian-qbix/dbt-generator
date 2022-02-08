@@ -16,7 +16,7 @@ def dbt_generator():
 
 @dbt_generator.command(help='Gennerate base models based on a .yml source')
 @click.option('-s', '--source-yml', type=click.Path(), help='Source .yml file to be used')
-@click.option('-f', '--find', type=click.Path(), help='Source .yml file to be used')
+@click.option('-f', '--find', type=str, default='{', help='Source .yml file to be used')
 @click.option('-o', '--output-path', type=click.Path(), help='Path to write generated models')
 @click.option('-m', '--model', type=str, default='', help='Select one model to generate')
 @click.option('-c', '--custom_prefix', type=str, default='', help='Enter a Custom String Prefix for Model Filename')
