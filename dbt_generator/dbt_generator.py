@@ -31,7 +31,7 @@ def generate(source_yml, output_path, find, source_index, model, custom_prefix, 
         if model_prefix:
             file_name = source_name + '_' + file_name
         file_path = output_path+file_name
-        if file_path.is_file():
+        if Path(file_path).is_file():
             print(f'Base model for table {file_name} already exists. Skipping')
         else:
             query = generate_base_model(table, source_name, find) 
