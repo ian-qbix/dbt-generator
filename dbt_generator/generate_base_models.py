@@ -1,7 +1,7 @@
 import yaml
 import subprocess
 from platform import system
-
+f
 
 def get_base_tables_and_source(file_path, source_index):
 		file = open(file_path)
@@ -13,6 +13,7 @@ def get_base_tables_and_source(file_path, source_index):
 
 def generate_base_model(table_name, source_name, find_arg):
 		print(f'Generating base model for table {table_name}')
+		
 		bash_command = f'''
 			dbt run-operation generate_base_model --args \'{{"source_name": "{source_name}", "table_name": "{table_name}"}}\'
 		'''

@@ -1,5 +1,7 @@
 import os
 import click
+import os
+from pathlib import Path
 from .generate_base_models import *
 from .process_base_models import *
 
@@ -29,9 +31,15 @@ def generate(source_yml, output_path, find, source_index, model, custom_prefix, 
         file_name = custom_prefix + table + '.sql'
         if model_prefix:
             file_name = source_name + '_' + file_name
-        query = generate_base_model(table, source_name, find)
-        file = open(os.path.join(output_path, file_name), 'w', newline='')
-        file.write(query)
+            file_path = output_path+file_name
+        if file_path.is_file():
+            print(f'Base model for table {file_name} already exists. Skipping')
+        else:
+            query = generate_base_model(table, source_name, find) 
+
+#dbt-generator generate -s ./models/sources/raw_twin_peaks.yml -o ./models/4.raw/test/
+            file = open(os.path.join(output_path, file_name), 'w', newline='')
+            file.write(query)
 
 
 @dbt_generator.command(help='Transform base models in a directory using a transforms.yml file')
